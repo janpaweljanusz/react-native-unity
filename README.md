@@ -11,8 +11,8 @@
 2. Build your project. This project was saved as (ios)[./UnityProject/ios] in the Unity project folder. You can now close Unity.
 3. Open your RN ios project workspace and add the [Unity Xcode project](./UnityProject/ios/Unity-iPhone.xcodeproj) to the project using the + on the bottom left of the project structure window (make sure no items are selected in the navigation pane, and the project is added at the top level of the workspace, see [issues regarding adding workspaces](https://stackoverflow.com/questions/11021514/xcode-4-x-adding-new-project-to-a-workspace)).
 4. Add UnityFramework.framework to Embedded Binaries [What are Embedded Binaries?](https://stackoverflow.com/questions/30173529/what-are-embedded-binaries-in-xcode)
-⋅⋅* add Unity-iPhone/Products/UnityFramework.framework to Embedded Binaries (this will also add as Linked Framework, which we remove next step)
-⋅⋅* remove UnityFramework.framework from Linked Frameworks and Libraries ( select it and press - ) 
+     * add Unity-iPhone/Products/UnityFramework.framework to Embedded Binaries (this will also add as Linked Framework, which we remove next step)
+     * remove UnityFramework.framework from Linked Frameworks and Libraries ( select it and press - ) 
 5. Select Unity-iPhone / Libraries / Plugins / iOS / NativeCallProxy.h and enable UnityFramework in Target Membership and set Public**
 6. Select Unity-iPhone / Data and swap Target Membership to UnityFramework from Unity-iPhone**
 7. Remove **AppDelegate.h** and **AppDelegate.m** files, rename **main.m** to **main.mm** and swap swap for the provided entrance script written by Unity (found in the Native iOS example).
