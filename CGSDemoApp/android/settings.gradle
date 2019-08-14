@@ -1,3 +1,5 @@
 rootProject.name = 'CGSDemoApp'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
+include ':unityLibrary'
+project(':unityLibrary').projectDir=new File('..\\..\\UnityProject\\androidBuild\\unityLibrary')

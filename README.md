@@ -5,7 +5,9 @@
 1. Create a ReactNative (RN) project (this project build with TypeScript template: `react-native init CGSDemoApp --template typescipt`, due to a [temporary issue](https://github.com/react-native-community/cli/issues/595) **Error: Cannot find module ...** the following was used to generate the project: `npx react-native init CGSDemoApp --template react-native-template-typescript@next`). See [package.json](./CGSDemoApp/package.json) for version details.
 2. Export Unity as a Library as explained [here](https://forum.unity.com/threads/using-unity-as-a-library-in-native-ios-android-apps.685195/). Step by step guides can be found for [Android](https://forum.unity.com/threads/integration-unity-as-a-library-in-native-android-app.685240/) and [iOS](https://forum.unity.com/threads/integration-unity-as-a-library-in-native-ios-app.685219). If you wish to export your own Unity project, you need to add [plugins](./UnityProject/Assets/Plugins) (2019.3.0a3+ required, this Unity was loaded with 2019.3.0a10). The steps for integration are explained at the links (highly recommended to read through for the extra information), and are briefly covered below.
 
-## Unity iOS
+## iOS
+
+### Unity
 
 1. Open Unity project and set platform to iOS. Add Bundle Identifier and Signing Team ID (found in your [developer account](https://developer.apple.com/)).
 2. Build your project. This project was saved as (ios)[./UnityProject/ios] in the Unity project folder. You can now close Unity.
@@ -23,6 +25,14 @@
 
 At this point we should have a Native i
 
-## React Native iOS
+### React Native
 
-1. Addition steps
+1. Additional steps coming...
+
+## Android
+
+### Unity
+
+1. Export project
+2. Add debug keystore (if needed)
+3. 
