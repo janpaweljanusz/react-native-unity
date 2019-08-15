@@ -1,4 +1,15 @@
-# Steps to build
+# React Native Unity
+=====
+   *This library aims at utilizing Library exports included in Unity 2019.3 alongside React Native.*
+
+## Requirements
+-----
+ - [Unity 2019.3.0a3+](https://unity.com/)
+ - [React Native](https://facebook.github.io/react-native/)
+ - Native Tools (Android Studio, XCode, CocoaPods)
+
+## Getting Started
+-----
 
 ## General Setup
 
