@@ -31,7 +31,7 @@ class App extends React.Component {
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
-    RNManager.updateColor(color);
+    RNManager.reactMessage(color);
     console.log('RN button clicked');
   }
 

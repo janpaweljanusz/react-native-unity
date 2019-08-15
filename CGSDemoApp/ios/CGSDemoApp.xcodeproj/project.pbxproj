@@ -10,7 +10,7 @@
 		00E356F31AD99517003FC87E /* CGSDemoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CGSDemoAppTests.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		160A07F60302148E2F92D99F /* libPods-CGSDemoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE3B38C92450997F2051AF9 /* libPods-CGSDemoApp-tvOS.a */; };
-		191B0B6C23047BFB00B3B4F1 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1960BD6023046EC200360FD9 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		194F8C002305860200827360 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 194F8BFE2305860200827360 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1960BD6A230471F900360FD9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1960BD69230471F900360FD9 /* main.mm */; };
 		1960BD70230478E300360FD9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1960BD6F230478E300360FD9 /* Media.xcassets */; };
 		19F1AD142304BE42006BDCC0 /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19F1AD132304BE42006BDCC0 /* main.storyboard */; };
@@ -38,13 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		191B0B6D23047BFC00B3B4F1 /* Embed Frameworks */ = {
+		194F8C012305860200827360 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				191B0B6C23047BFB00B3B4F1 /* UnityFramework.framework in Embed Frameworks */,
+				194F8C002305860200827360 /* UnityFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +61,7 @@
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CGSDemoApp/Info.plist; sourceTree = "<group>"; };
 		146F73FC7B4F1E7F79512653 /* Pods-CGSDemoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CGSDemoAppTests.release.xcconfig"; path = "Target Support Files/Pods-CGSDemoAppTests/Pods-CGSDemoAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		1960BD6023046EC200360FD9 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		194F8BFE2305860200827360 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1960BD69230471F900360FD9 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = CGSDemoApp/main.mm; sourceTree = "<group>"; };
 		1960BD6F230478E300360FD9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		19F1AD132304BE42006BDCC0 /* main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = main.storyboard; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				1960BD6023046EC200360FD9 /* UnityFramework.framework */,
+				194F8BFE2305860200827360 /* UnityFramework.framework */,
 				13B07FAE1A68108700A75B9A /* CGSDemoApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* CGSDemoAppTests */,
@@ -241,7 +241,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				191B0B6D23047BFC00B3B4F1 /* Embed Frameworks */,
+				194F8C012305860200827360 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

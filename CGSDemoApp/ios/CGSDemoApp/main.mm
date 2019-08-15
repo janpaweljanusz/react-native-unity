@@ -91,10 +91,9 @@ AppDelegate* hostDelegate = NULL;
   return dispatch_get_main_queue();
 }
 RCT_EXPORT_MODULE();
-RCT_EXPORT_METHOD(updateColor:(NSString*)color)
+RCT_EXPORT_METHOD(reactMessage:(NSString*)color)
 {
-  
-  RCTLogInfo(@"UPDATE COLOR: %@", color);
+  RCTLogInfo(@"REACT UPDATE COLOR: %@", color);
   NSString *s = color;
   const char *c = [s UTF8String];
   [hostDelegate sendMsgToUnity: c];
@@ -136,21 +135,11 @@ NSDictionary* appLaunchOpts;
   }
 }
 
-- (void)randomizeColor
+- (void)unityMessage:(NSString*)color
 {
-  [self randomizeColor:@""];
-}
-
-- (void)randomizeColor:(NSString*)color
-{
-//  if([color isEqualToString:@"blue"]) self.viewController.unpauseBtn.backgroundColor = UIColor.blueColor;
-//  else if([color isEqualToString:@"red"]) self.viewController.unpauseBtn.backgroundColor = UIColor.redColor;
-//  else if([color isEqualToString:@"yellow"]) self.viewController.unpauseBtn.backgroundColor = UIColor.yellowColor;
-//  [self.window makeKeyAndVisible];
-  NSLog(@"cubecolor: %@", color);
-  self.props = @{@"cubeColor": color};
+  NSLog(@"UNITY UPDATE COLOR: %@", color);
+  self.props = @{@"cubeColor": [NSString stringWithFormat:@"#%@", color]};
   self.rootView.appProperties = self.props;
-  
 }
 
 - (void)sendMsgByButton
@@ -164,7 +153,8 @@ NSDictionary* appLaunchOpts;
 {
   [[self ufw] sendMessageToGOWithName: "Cube" functionName: "ChangeColor" message: color];
   NSString *s = [NSString stringWithUTF8String:color];
-  [self randomizeColor:s];
+  self.props = @{@"cubeColor": s};
+  self.rootView.appProperties = self.props;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -191,29 +181,11 @@ NSDictionary* appLaunchOpts;
   
   self.unityView = [[[self ufw] appController] rootView];
   
-//  self.showUnityOffButton = [UIButton buttonWithType: UIButtonTypeSystem];
-//  [self.showUnityOffButton setTitle: @"Show Main" forState: UIControlStateNormal];
-//  self.showUnityOffButton.frame = CGRectMake(0, 0, 100, 44);
-//  self.showUnityOffButton.center = CGPointMake(50, 300);
-//  self.showUnityOffButton.backgroundColor = [UIColor greenColor];
-//  [view addSubview: self.showUnityOffButton];
-//  [self.showUnityOffButton addTarget: self action: @selector(randomizeColor) forControlEvents: UIControlEventPrimaryActionTriggered];
-//
-  self.btnSendMsg = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.btnSendMsg setTitle: @"Cube Yellow" forState: UIControlStateNormal];
-  self.btnSendMsg.frame = CGRectMake(0, 0, 100, 44);
-  self.btnSendMsg.center = CGPointMake(150, 300);
-  self.btnSendMsg.backgroundColor = [UIColor yellowColor];
-  [self.unityView addSubview: self.btnSendMsg];
-  [self.btnSendMsg addTarget: self action: @selector(sendMsgByButton) forControlEvents: UIControlEventPrimaryActionTriggered];
-  self.btnSendMsg.tag = 0;
-  
-  // *Reload (formerly unload)
+  // Reload Button
   self.unloadBtn = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.unloadBtn setTitle: @"Unload" forState: UIControlStateNormal];
-  self.unloadBtn.frame = CGRectMake(250, 0, 100, 44);
-  self.unloadBtn.center = CGPointMake(250, 300);
-  self.unloadBtn.backgroundColor = [UIColor redColor];
+  [self.unloadBtn setTitle: @"Reload" forState: UIControlStateNormal];
+  self.unloadBtn.frame = CGRectMake(0, 150, 150, 50);
+  self.unloadBtn.backgroundColor = [UIColor whiteColor];
   [self.unloadBtn addTarget: self action: @selector(reload:) forControlEvents: UIControlEventPrimaryActionTriggered];
   [self.unityView addSubview: self.unloadBtn];
 

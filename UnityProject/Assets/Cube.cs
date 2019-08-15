@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEngine.UI;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class NativeAPI {
     [DllImport("__Internal")]
-    public static extern void randomizeColor(string lastStringColor);
+    public static extern void unityMessage(string lastStringColor);
 }
 
 public class Cube : MonoBehaviour
@@ -15,51 +11,52 @@ public class Cube : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0, Time.deltaTime*10, 0);
+        transform.Rotate(0, Time.deltaTime * 10, 0);
     }
 
     string lastStringColor = "";
     void ChangeColor(string newColor)
     {
-
         lastStringColor = newColor;
-    
-        if (newColor == "red") GetComponent<Renderer>().material.color = Color.red;
-        else if (newColor == "blue") GetComponent<Renderer>().material.color = Color.blue;
-        else if (newColor == "yellow") GetComponent<Renderer>().material.color = Color.yellow;
-        else {
-            Color myColor;
-            if (ColorUtility.TryParseHtmlString(newColor, out myColor)) {
-                setColor(myColor);
-            } else GetComponent<Renderer>().material.color = Color.black;
+        Color myColor;
+        if (ColorUtility.TryParseHtmlString(newColor, out myColor))
+        {
+            GetComponent<Renderer>().material.color = myColor;
+        } else
+        {
+            lastStringColor = "#000000";
+            GetComponent<Renderer>().material.color = Color.black;
         }
+        unityMessage();
     }
 
-    void setColor(Color color) {
-            GetComponent<Renderer>().material.color = color;
+    void setColor(Color color)
+    {
+        lastStringColor = ColorUtility.ToHtmlStringRGB(color);
+        GetComponent<Renderer>().material.color = color;
+        unityMessage();
     }
 
 
-    void randomizeColor()
+    void unityMessage()
     {
 #if UNITY_ANDROID
         try
         {
             AndroidJavaClass jc = new AndroidJavaClass("com.company.product.OverrideUnityActivity");
             AndroidJavaObject overrideActivity = jc.GetStatic<AndroidJavaObject>("instance");
-            overrideActivity.Call("showMainActivity", lastStringColor);
+            overrideActivity.Call("unityMessage", lastStringColor);
         } catch(Exception e)
         {
         }
 #elif UNITY_IOS
-        NativeAPI.randomizeColor(lastStringColor);
+        NativeAPI.unityMessage(lastStringColor);
 #endif
     }
 
     void OnGUI()
     {
         if (GUI.Button(new Rect(10, 10, 200, 100), "Randomize!")) setColor(UnityEngine.Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f));
-        randomizeColor();
     }
 }
 
