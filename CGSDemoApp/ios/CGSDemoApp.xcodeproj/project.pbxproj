@@ -13,6 +13,7 @@
 		191B0B6C23047BFB00B3B4F1 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1960BD6023046EC200360FD9 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1960BD6A230471F900360FD9 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1960BD69230471F900360FD9 /* main.mm */; };
 		1960BD70230478E300360FD9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1960BD6F230478E300360FD9 /* Media.xcassets */; };
+		19F1AD142304BE42006BDCC0 /* main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19F1AD132304BE42006BDCC0 /* main.storyboard */; };
 		2DCD954D1E0B4F2C00145EB5 /* CGSDemoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CGSDemoAppTests.m */; };
 		4813147CB2355730BBB54A7F /* libPods-CGSDemoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6CA53BB809F82B8958C33E /* libPods-CGSDemoApp-tvOSTests.a */; };
 		6F585B3882A9BB215BCF1037 /* libPods-CGSDemoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED4740C325C7E6D8A057D2 /* libPods-CGSDemoAppTests.a */; };
@@ -63,6 +64,7 @@
 		1960BD6023046EC200360FD9 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1960BD69230471F900360FD9 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = CGSDemoApp/main.mm; sourceTree = "<group>"; };
 		1960BD6F230478E300360FD9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		19F1AD132304BE42006BDCC0 /* main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = main.storyboard; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* CGSDemoApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CGSDemoApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* CGSDemoApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CGSDemoApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6CA53BB809F82B8958C33E /* libPods-CGSDemoApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CGSDemoApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +142,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				1960BD6F230478E300360FD9 /* Media.xcassets */,
+				19F1AD132304BE42006BDCC0 /* main.storyboard */,
 			);
 			name = CGSDemoApp;
 			sourceTree = "<group>";
@@ -295,7 +298,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = Facebook;
+				ORGANIZATIONNAME = "Computer Generated Solutions";
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -351,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1960BD70230478E300360FD9 /* Media.xcassets in Resources */,
+				19F1AD142304BE42006BDCC0 /* main.storyboard in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,6 +654,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cgsinc.react-unity-demo";
 				PRODUCT_NAME = CGSDemoApp;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -670,6 +675,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cgsinc.react-unity-demo";
 				PRODUCT_NAME = CGSDemoApp;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

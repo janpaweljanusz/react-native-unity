@@ -3,6 +3,15 @@
 #include <UnityFramework/UnityFramework.h>
 #include <UnityFramework/NativeCallProxy.h>
 
+#import <React/RCTBridge.h>
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+#import <React/RCTLog.h>
+#import <React/RCTBridgeModule.h>
+
+@interface RNManager: NSObject <RCTBridgeModule>
+@end
+
 UnityFramework* UnityFrameworkLoad()
 {
   NSString* bundlePath = nil;
@@ -40,11 +49,16 @@ void showAlert(NSString* title, NSString* msg) {
 @property (nonatomic, strong) UINavigationController *navVC;
 @property (nonatomic, strong) UIButton *unloadBtn;
 @property (nonatomic, strong) MyViewController *viewController;
-
+@property (nonatomic, strong) NSString *cubeColor;
+@property (nonatomic, strong) NSDictionary *props;
+@property (nonatomic, strong) RCTRootView *rootView;
+@property (nonatomic, strong) UIView *unityView;
 
 @property UnityFramework* ufw;
 - (void)initUnity;
 - (void)ShowMainView;
+- (void)sendMsgToUnity:(const char*)color;
+- (void)randomizeColor:(NSString*)color;
 
 - (void)didFinishLaunching:(NSNotification*)notification;
 - (void)didBecomeActive:(NSNotification*)notification;
@@ -54,6 +68,8 @@ void showAlert(NSString* title, NSString* msg) {
 - (void)willTerminate:(NSNotification*)notification;
 - (void)unityDidUnloaded:(NSNotification*)notification;
 
+@property RNManager* rnManager;
+- (void)updateColor;
 @end
 
 AppDelegate* hostDelegate = NULL;
@@ -69,39 +85,28 @@ AppDelegate* hostDelegate = NULL;
 @property (nonatomic, strong) UIButton *unloadBtn;
 @end
 
+@implementation RNManager
+- (dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
+}
+RCT_EXPORT_MODULE();
+RCT_EXPORT_METHOD(updateColor:(NSString*)color)
+{
+  
+  RCTLogInfo(@"UPDATE COLOR: %@", color);
+  NSString *s = color;
+  const char *c = [s UTF8String];
+  [hostDelegate sendMsgToUnity: c];
+}
+@end
+
 
 @implementation MyViewController
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor blueColor];
-  
-  // INIT UNITY
-  self.unityInitBtn = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.unityInitBtn setTitle: @"Init" forState: UIControlStateNormal];
-  self.unityInitBtn.frame = CGRectMake(0, 0, 100, 44);
-  self.unityInitBtn.center = CGPointMake(50, 120);
-  self.unityInitBtn.backgroundColor = [UIColor greenColor];
-  [self.unityInitBtn addTarget: hostDelegate action: @selector(initUnity) forControlEvents: UIControlEventPrimaryActionTriggered];
-  [self.view addSubview: self.unityInitBtn];
-  
-  // SHOW UNITY
-  self.unpauseBtn = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.unpauseBtn setTitle: @"Show Unity" forState: UIControlStateNormal];
-  self.unpauseBtn.frame = CGRectMake(100, 0, 100, 44);
-  self.unpauseBtn.center = CGPointMake(150, 120);
-  self.unpauseBtn.backgroundColor = [UIColor lightGrayColor];
-  [self.unpauseBtn addTarget: hostDelegate action: @selector(ShowMainView) forControlEvents: UIControlEventPrimaryActionTriggered];
-  [self.view addSubview: self.unpauseBtn];
-  
-  // UNLOAD UNITY
-  self.unloadBtn = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.unloadBtn setTitle: @"Unload" forState: UIControlStateNormal];
-  self.unloadBtn.frame = CGRectMake(300, 0, 100, 44);
-  self.unloadBtn.center = CGPointMake(250, 120);
-  self.unloadBtn.backgroundColor = [UIColor redColor];
-  [self.unloadBtn addTarget: hostDelegate action: @selector(unloadButtonTouched:) forControlEvents: UIControlEventPrimaryActionTriggered];
-  [self.view addSubview: self.unloadBtn];
+  [hostDelegate initUnity];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,37 +136,40 @@ NSDictionary* appLaunchOpts;
   }
 }
 
-- (void)showHostMainWindow
+- (void)randomizeColor
 {
-  [self showHostMainWindow:@""];
+  [self randomizeColor:@""];
 }
 
-- (void)showHostMainWindow:(NSString*)color
+- (void)randomizeColor:(NSString*)color
 {
-  if([color isEqualToString:@"blue"]) self.viewController.unpauseBtn.backgroundColor = UIColor.blueColor;
-  else if([color isEqualToString:@"red"]) self.viewController.unpauseBtn.backgroundColor = UIColor.redColor;
-  else if([color isEqualToString:@"yellow"]) self.viewController.unpauseBtn.backgroundColor = UIColor.yellowColor;
-  [self.window makeKeyAndVisible];
+//  if([color isEqualToString:@"blue"]) self.viewController.unpauseBtn.backgroundColor = UIColor.blueColor;
+//  else if([color isEqualToString:@"red"]) self.viewController.unpauseBtn.backgroundColor = UIColor.redColor;
+//  else if([color isEqualToString:@"yellow"]) self.viewController.unpauseBtn.backgroundColor = UIColor.yellowColor;
+//  [self.window makeKeyAndVisible];
+  NSLog(@"cubecolor: %@", color);
+  self.props = @{@"cubeColor": color};
+  self.rootView.appProperties = self.props;
+  
 }
 
-- (void)sendMsgToUnity
+- (void)sendMsgByButton
 {
-  [[self ufw] sendMessageToGOWithName: "Cube" functionName: "ChangeColor" message: "yellow"];
+  NSString *s = @"yellow";
+  const char *c = [s UTF8String];
+  [self sendMsgToUnity: c];
+}
+
+- (void)sendMsgToUnity:(const char*)color
+{
+  [[self ufw] sendMessageToGOWithName: "Cube" functionName: "ChangeColor" message: color];
+  NSString *s = [NSString stringWithUTF8String:color];
+  [self randomizeColor:s];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   hostDelegate = self;
-  appLaunchOpts = launchOptions;
-  
-  self.window = [[UIWindow alloc] initWithFrame: [UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor redColor];
-  //ViewController *viewcontroller = [[ViewController alloc] initWithNibName:nil Bundle:nil];
-  self.viewController = [[MyViewController alloc] init];
-  self.navVC = [[UINavigationController alloc] initWithRootViewController: self.viewController];
-  self.window.rootViewController = self.navVC;
-  [self.window makeKeyAndVisible];
-  
   return YES;
 }
 
@@ -181,34 +189,63 @@ NSDictionary* appLaunchOpts;
   
   [[self ufw] runEmbeddedWithArgc: gArgc argv: gArgv appLaunchOpts: appLaunchOpts];
   
-  auto view = [[[self ufw] appController] rootView];
+  self.unityView = [[[self ufw] appController] rootView];
   
-  self.showUnityOffButton = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.showUnityOffButton setTitle: @"Show Main" forState: UIControlStateNormal];
-  self.showUnityOffButton.frame = CGRectMake(0, 0, 100, 44);
-  self.showUnityOffButton.center = CGPointMake(50, 300);
-  self.showUnityOffButton.backgroundColor = [UIColor greenColor];
-  [view addSubview: self.showUnityOffButton];
-  [self.showUnityOffButton addTarget: self action: @selector(showHostMainWindow) forControlEvents: UIControlEventPrimaryActionTriggered];
-  
+//  self.showUnityOffButton = [UIButton buttonWithType: UIButtonTypeSystem];
+//  [self.showUnityOffButton setTitle: @"Show Main" forState: UIControlStateNormal];
+//  self.showUnityOffButton.frame = CGRectMake(0, 0, 100, 44);
+//  self.showUnityOffButton.center = CGPointMake(50, 300);
+//  self.showUnityOffButton.backgroundColor = [UIColor greenColor];
+//  [view addSubview: self.showUnityOffButton];
+//  [self.showUnityOffButton addTarget: self action: @selector(randomizeColor) forControlEvents: UIControlEventPrimaryActionTriggered];
+//
   self.btnSendMsg = [UIButton buttonWithType: UIButtonTypeSystem];
-  [self.btnSendMsg setTitle: @"Send Msg" forState: UIControlStateNormal];
+  [self.btnSendMsg setTitle: @"Cube Yellow" forState: UIControlStateNormal];
   self.btnSendMsg.frame = CGRectMake(0, 0, 100, 44);
   self.btnSendMsg.center = CGPointMake(150, 300);
   self.btnSendMsg.backgroundColor = [UIColor yellowColor];
-  [view addSubview: self.btnSendMsg];
-  [self.btnSendMsg addTarget: self action: @selector(sendMsgToUnity) forControlEvents: UIControlEventPrimaryActionTriggered];
+  [self.unityView addSubview: self.btnSendMsg];
+  [self.btnSendMsg addTarget: self action: @selector(sendMsgByButton) forControlEvents: UIControlEventPrimaryActionTriggered];
+  self.btnSendMsg.tag = 0;
   
-  // Unload
+  // *Reload (formerly unload)
   self.unloadBtn = [UIButton buttonWithType: UIButtonTypeSystem];
   [self.unloadBtn setTitle: @"Unload" forState: UIControlStateNormal];
   self.unloadBtn.frame = CGRectMake(250, 0, 100, 44);
   self.unloadBtn.center = CGPointMake(250, 300);
   self.unloadBtn.backgroundColor = [UIColor redColor];
-  [self.unloadBtn addTarget: self action: @selector(unloadButtonTouched:) forControlEvents: UIControlEventPrimaryActionTriggered];
-  [view addSubview: self.unloadBtn];
+  [self.unloadBtn addTarget: self action: @selector(reload:) forControlEvents: UIControlEventPrimaryActionTriggered];
+  [self.unityView addSubview: self.unloadBtn];
+
+  // React View
+  NSURL *jsCodeLocation = [NSURL URLWithString:@"http://192.168.11.191:8081/index.bundle?platform=ios"];
+  self.cubeColor = @"green";
+  self.props = @{@"cubeColor": self.cubeColor};
   
-  // 
+  self.rootView =
+  [[RCTRootView alloc] initWithBundleURL: jsCodeLocation
+                              moduleName: @"CGSDemoApp"
+                       initialProperties: self.props
+                           launchOptions: nil];
+  
+  self.rootView.frame = CGRectMake(0, self.unityView.frame.size.height - 80, self.unityView.frame.size.width, 80);
+  self.rootView.backgroundColor = UIColor.clearColor;
+  [self.unityView addSubview:self.rootView];
+  
+}
+
+- (void)reload:(UIButton *)sender
+{
+  [self.rootView removeFromSuperview];
+  NSURL *jsCodeLocation = [NSURL URLWithString:@"http://192.168.11.191:8081/index.bundle?platform=ios"];
+  self.rootView =
+  [[RCTRootView alloc] initWithBundleURL: jsCodeLocation
+                              moduleName: @"CGSDemoApp"
+                       initialProperties: self.props
+                           launchOptions: nil];
+  self.rootView.frame = CGRectMake(0, self.unityView.frame.size.height - 80, self.unityView.frame.size.width, 80);
+  self.rootView.backgroundColor = UIColor.clearColor;
+  [self.unityView addSubview:self.rootView];
 }
 
 - (void)unloadButtonTouched:(UIButton *)sender
@@ -226,7 +263,7 @@ NSDictionary* appLaunchOpts;
   
   [[self ufw] unregisterFrameworkListener: self];
   [self setUfw: nil];
-  [self showHostMainWindow:@""];
+  [self randomizeColor:@""];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application { [[[self ufw] appController] applicationWillResignActive: application]; }
@@ -238,6 +275,9 @@ NSDictionary* appLaunchOpts;
 @end
 
 
+
+
+
 int main(int argc, char* argv[])
 {
   gArgc = argc;
@@ -245,19 +285,7 @@ int main(int argc, char* argv[])
   
   @autoreleasepool
   {
-    if (false)
-    {
-      // run UnityFramework as main app
-      id ufw = UnityFrameworkLoad();
-      
-      // Set UnityFramework target for Unity-iPhone/Data folder to make Data part of a UnityFramework.framework and call to setDataBundleId
-      // ODR is not supported in this case, ( if you need embedded and ODR you need to copy data )
-      [ufw setDataBundleId: "com.unity3d.framework"];
-      [ufw runUIApplicationMainWithArgc: argc argv: argv];
-    } else {
-      // run host app first and then unity later
-      UIApplicationMain(argc, argv, nil, [NSString stringWithUTF8String: "AppDelegate"]);
-    }
+    UIApplicationMain(argc, argv, nil, [NSString stringWithUTF8String: "AppDelegate"]);
   }
   
   return 0;
