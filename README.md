@@ -7,7 +7,7 @@
 
 -  [Unity 2019.3.0a3+](https://unity.com/)
 
--  [React Native](https://facebook.github.io/react-native/)
+-  [React Native 0.60](https://facebook.github.io/react-native/)
 
 - Native Development Tools (Android Studio, XCode, CocoaPods, etc.)
   
