@@ -63,5 +63,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 # ios build
-ios/
+/ios
 androidBuild/
