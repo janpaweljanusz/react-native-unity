@@ -15,15 +15,18 @@
 ## Getting Started (iOS)
 1. Clone repository `git clone git@github.com:CGS-Canada/react-native-unity.git`
 2. `cd react-native-unity/CGSDemoApp/` and run `npm install`
-3. Open **UnityProject** folder in Unity and [export the project](https://forum.unity.com/threads/integration-unity-as-a-library-in-native-ios-app.685219) to the folder **UnityProject** and save as **ios**.
-4. Open the React Native workspace in Xcode ( **CGSDemoApp** -> **ios** -> **CGSDemoApp.xcworkspace** ). Update the signing/indentifier.
-5. Update items required for use with **UnityFramework.framework** (these steps are required any time you re-export your ios project from Unity):
+3. `cd react-native-unity/CGSDemoApp/ios` and `pod install`
+4. Open **UnityProject** folder in Unity and [export the project](https://forum.unity.com/threads/integration-unity-as-a-library-in-native-ios-app.685219) to the folder **UnityProject** and save as **ios**.
+5. Open the React Native workspace in Xcode ( **CGSDemoApp** -> **ios** -> **CGSDemoApp.xcworkspace** ). Update the signing/indentifier.
+6. Update items required for use with **UnityFramework.framework** (these steps are required any time you re-export your ios project from Unity):
      -  Add UnityFramework.framework to Embedded Binaries [What are Embedded Binaries?](https://stackoverflow.com/questions/30173529/what-are-embedded-binaries-in-xcode)
           - add Unity-iPhone/Products/UnityFramework.framework to Embedded Binaries (this will also add as Linked Framework, which we remove next step)
           - remove UnityFramework.framework from Linked Frameworks and Libraries ( select it and press "-" )
      - Select Unity-iPhone / Libraries / Plugins / iOS / NativeCallProxy.h and enable UnityFramework in Target Membership and set Public**
      - Select Unity-iPhone / Data and swap Target Membership to UnityFramework from Unity-iPhone**
-6. `cd react-native-unity/CGSDemoApp/ios` and `pod install`
+     
+Your project is now ready to run!
+
 ## Getting Started (Android) (*to-do***)
   
 
