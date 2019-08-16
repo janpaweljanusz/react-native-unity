@@ -24,6 +24,7 @@
           - remove UnityFramework.framework from Linked Frameworks and Libraries ( select it and press "-" )
      - Select Unity-iPhone / Libraries / Plugins / iOS / NativeCallProxy.h and enable UnityFramework in Target Membership and set Public**
      - Select Unity-iPhone / Data and swap Target Membership to UnityFramework from Unity-iPhone**
+7. Lastly, update the metro bundler IP address in **main.mm** `NSURL *jsCodeLocation = [NSURL URLWithString:@"http://<<metro server ip address>>/index.bundle?platform=ios"];` (or swap to local bundle loading of index.js)
      
 Your project is now ready to run!
 
