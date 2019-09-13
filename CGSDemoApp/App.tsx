@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import {NativeModules} from 'react-native';
 
+NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT);
+
 class App extends React.Component {
 
   render() {
@@ -38,7 +40,7 @@ class App extends React.Component {
   subContainerStyle() {
     return {
       width: 240,
-      height: '100%',
+      height: 100,
       backgroundColor: this.props['cubeColor']
     }
   }
