@@ -47,6 +47,8 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+androidBuild-0.1-v1.symbols.zip
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
