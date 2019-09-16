@@ -41,8 +41,9 @@ public class ToastModule extends ReactContextBaseJavaModule {
     @ReactMethod
   public void show(String message, int duration) {
     Toast.makeText(getReactApplicationContext(), message, duration).show();
-    // Intent intent = new Intent(getReactApplicationContext(), MainUnityActivity.class);
-    // getReactApplicationContext().startActivity(intent);
+    Intent intent = new Intent(getReactApplicationContext(), MainUnityActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    getReactApplicationContext().startActivity(intent);
     // callUnity();
   }
   // public void callUnity(View v){

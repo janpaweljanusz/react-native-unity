@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {NativeModules} from 'react-native';
 
-NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT);
+
 
 class App extends React.Component {
 
@@ -22,20 +22,21 @@ class App extends React.Component {
           </Text>
           </View>
         </View>
+        <Button title="Press me" onPress={()=> {NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT)}}>press me</Button>
       </View>
     );
   };
 
-  onPressButton() {
-    var RNManager = NativeModules.RNManager;
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    RNManager.reactMessage(color);
-    console.log('RN button clicked');
-  }
+  // onPressButton() {
+  //   var RNManager = NativeModules.RNManager;
+  //   var letters = '0123456789ABCDEF';
+  //   var color = '#';
+  //   for (var i = 0; i < 6; i++) {
+  //     color += letters[Math.floor(Math.random() * 16)];
+  //   }
+  //   RNManager.reactMessage(color);
+  //   console.log('RN button clicked');
+  // }
 
   subContainerStyle() {
     return {
