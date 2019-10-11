@@ -1,7 +1,10 @@
 package com.cgsdemoapp;
 
+import com.cgsdemoapp.CustomToastPackage;
+
 import android.app.Application;
 import android.util.Log;
+
 
 import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
@@ -26,7 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       @SuppressWarnings("UnnecessaryLocalVariable")
       List<ReactPackage> packages = new PackageList(this).getPackages();
       // Packages that cannot be autolinked yet can be added manually here, for example:
-      // packages.add(new MyReactNativePackage());
+      packages.add(new CustomToastPackage());
       return packages;
     }
 
@@ -45,5 +48,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    
   }
 }

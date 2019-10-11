@@ -12,4 +12,14 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "CGSDemoApp";
     }
+    // public void onUnityLoad(View v) {
+    //     Intent intent = new Intent(this, MainUnityActivity.class);
+    //     startActivity(intent);
+    // }
+
+    // public void onUnityUnload(View v) {
+    //     if(MainUnityActivity.instance != null)
+    //         MainUnityActivity.instance.finish();
+    //     else showToast("Show Unity First");
+    // }
 }

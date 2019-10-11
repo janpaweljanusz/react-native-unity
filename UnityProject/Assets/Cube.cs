@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
-
+/*
 public class NativeAPI {
     [DllImport("__Internal")]
     public static extern void unityMessage(string lastStringColor);
 }
-
+*/
 public class Cube : MonoBehaviour
 {
 
@@ -42,6 +42,7 @@ public class Cube : MonoBehaviour
     void unityMessage()
     {
 #if UNITY_ANDROID
+        /*
         try
         {
             AndroidJavaClass jc = new AndroidJavaClass("com.company.product.OverrideUnityActivity");
@@ -49,7 +50,9 @@ public class Cube : MonoBehaviour
             overrideActivity.Call("unityMessage", lastStringColor);
         } catch(Exception e)
         {
+            Debug.Log(e);
         }
+        */
 #elif UNITY_IOS
         NativeAPI.unityMessage(lastStringColor);
 #endif
