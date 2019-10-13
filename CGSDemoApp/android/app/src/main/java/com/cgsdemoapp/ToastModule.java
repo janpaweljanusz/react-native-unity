@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
 import android.content.Intent;
+import android.util.Log;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +20,17 @@ import java.util.HashMap;
 
 public class ToastModule extends ReactContextBaseJavaModule {
 
+  public static ToastModule _instance;
+
+
   private static final String DURATION_SHORT_KEY = "SHORT";
   private static final String DURATION_LONG_KEY = "LONG";
+  boolean isUnityLoaded = false;
+
 
   ToastModule(ReactApplicationContext reactContext) {
     super(reactContext);
+    _instance = this;
   }
 
     @Override
@@ -37,15 +44,27 @@ public class ToastModule extends ReactContextBaseJavaModule {
     constants.put(DURATION_LONG_KEY, Toast.LENGTH_LONG);
     return constants;
   }
+  
+  public void GiveLog(){
+    Log.v("kaskadowosc" ,"NONO"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
+  }
 
     @ReactMethod
   public void show(String message, int duration) {
+    Log.v("kaskadowosc" ,"kaskadowosc"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
     Toast.makeText(getReactApplicationContext(), message, duration).show();
     Intent intent = new Intent(getReactApplicationContext(), MainUnityActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    if (isUnityLoaded){
+      // intent.putExtra("doQuit", true);
+    }
+    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     getReactApplicationContext().startActivity(intent);
     // callUnity();
+    isUnityLoaded = !isUnityLoaded;
   }
+
+
+
   // public void callUnity(View v){
   //   Intent intent = new Intent(this, MainUnityActivity.class);
   //   startActivity(intent);

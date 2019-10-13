@@ -3,13 +3,29 @@ import {
   View,
   StyleSheet,
   Button,
-  Text
+  Text,
+  TextInput 
 } from 'react-native';
-import {NativeModules, Platform} from 'react-native';
+import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
 
 
 
 class App extends React.Component {
+  startValue: number;
+constructor(props){
+  super(props);
+  this.state = { text: 'Useless Placeholder' };
+  this.startValue = Math.random();
+}
+
+componentDidMount() {
+  const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
+  eventEmitter.addListener('EventReminder', (event) => {
+    console.log(event.eventProperty) // "someValue"
+    this.setState({text: 'bagno'});
+    // handle event and you will get a value in event object, you can log it here
+  });
+}
 
   render() {
     var cubeColor = this.props['cubeColor'];
@@ -17,9 +33,17 @@ class App extends React.Component {
       <View style={styles.container}>
         <View style={this.subContainerStyle()} onTouchEndCapture={Platform.OS !== 'android'&&this.onPressButton}>
           <View style={styles.container}>
-            <Text style={styles.myText}>
-              Randomize
+          <Text style={styles.myText}>
+              start value: {this.startValue}
           </Text>
+            <Text style={styles.myText}>
+              {Math.random()}
+          </Text>
+            <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+          />
           </View>
         </View>
         <Button title="Press me" onPress={()=>  {Platform.OS === 'android'&&NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT)}}>press me</Button>
