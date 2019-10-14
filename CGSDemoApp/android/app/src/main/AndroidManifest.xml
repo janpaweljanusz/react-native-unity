@@ -16,7 +16,6 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize"
         android:process=":MainProcess">
-        >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -27,7 +26,6 @@
         android:name=".MainUnityActivity"
         android:label="Unity"
         android:process=":UnityProcess">
-        >
     </activity>
     </application>
 

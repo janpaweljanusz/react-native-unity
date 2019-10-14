@@ -55,12 +55,12 @@ public class MainUnityActivity extends OverrideUnityActivity {
     
     @Override
     protected void showMainActivity(String setToColor) {
-        ToastModule._instance.GiveLog();
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); // | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("setColor", setToColor);
-        startActivity(intent);
-        mUnityPlayer.unload();
+        // startActivity(intent);
+        finish();
+        // mUnityPlayer.unload();
 
         ///////////////
         //FrameLayout layout = mUnityPlayer;
