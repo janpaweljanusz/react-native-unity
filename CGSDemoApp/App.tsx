@@ -6,7 +6,7 @@ import {
   Text,
   TextInput 
 } from 'react-native';
-import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
+import {UIManager, NativeModules, Platform} from 'react-native';
 
 
 
@@ -19,12 +19,22 @@ constructor(props){
 }
 
 componentDidMount() {
-  const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
-  eventEmitter.addListener('EventReminder', (event) => {
-    console.log(event.eventProperty) // "someValue"
-    this.setState({text: 'bagno'});
-    // handle event and you will get a value in event object, you can log it here
-  });
+  // const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
+  // eventEmitter.addListener('EventReminder', (event) => {
+  //   console.log(event.eventProperty) // "someValue"
+  //   this.setState({text: 'bagno'});
+  //   // handle event and you will get a value in event object, you can log it here
+  // });
+}
+
+measureLayout = async () => {
+  try {
+    let message = await NativeModules.ToastExample.showUnity('Awesome', NativeModules.ToastExample.SHORT);
+    this.setState({text:message});
+    console.log(message);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
   render() {
@@ -47,6 +57,7 @@ componentDidMount() {
           </View>
         </View>
         <Button title="Press me" onPress={()=>  {Platform.OS === 'android'&&NativeModules.ToastExample.show('Awesome', NativeModules.ToastExample.SHORT)}}>press me</Button>
+        <Button title="New Method" onPress={()=> this.measureLayout() }>press me</Button>
       </View>
     );
   };

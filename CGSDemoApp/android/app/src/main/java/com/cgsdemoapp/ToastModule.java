@@ -1,12 +1,15 @@
 package com.cgsdemoapp;
 
+import android.app.Activity;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.ReactMethod;
 
 import android.content.Intent;
@@ -25,7 +28,7 @@ public class ToastModule extends ReactContextBaseJavaModule {
   private static final String DURATION_LONG_KEY = "LONG";
   boolean isUnityLoaded = false;
 
-  private static final int IMAGE_PICKER_REQUEST = 467081;
+  private static final int IMAGE_PICKER_REQUEST = 10;
   private static final String E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST";
   private static final String E_PICKER_CANCELLED = "E_PICKER_CANCELLED";
   private static final String E_FAILED_TO_SHOW_PICKER = "E_FAILED_TO_SHOW_PICKER";
@@ -36,18 +39,18 @@ public class ToastModule extends ReactContextBaseJavaModule {
   private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
 
     @Override
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intentData) {
       if (requestCode == IMAGE_PICKER_REQUEST) {
         if (mPickerPromise != null) {
           if (resultCode == Activity.RESULT_CANCELED) {
             mPickerPromise.reject(E_PICKER_CANCELLED, "Image picker was cancelled");
           } else if (resultCode == Activity.RESULT_OK) {
-            Uri uri = intent.getData();
-
-            if (uri == null) {
+            String message = intentData.getStringExtra("result");
+            Log.v("kaskadowosc" ,"message" +message + ">>"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
+            if (message == null) {
               mPickerPromise.reject(E_NO_IMAGE_DATA_FOUND, "No image data found");
             } else {
-              mPickerPromise.resolve(uri.toString());
+              mPickerPromise.resolve(message);
             }
           }
 
@@ -95,9 +98,9 @@ public class ToastModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void showUnity(final Promise promise) {
+  public void showUnity(String message, int duration, final Promise promise) {
     Activity currentActivity = getCurrentActivity();
-
+    Toast.makeText(getReactApplicationContext(), message, duration).show();
     if (currentActivity == null) {
       promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist");
       return;
