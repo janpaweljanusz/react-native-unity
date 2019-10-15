@@ -17,8 +17,6 @@ public class MainUnityActivity extends OverrideUnityActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.MainActivity);
-        // addControlsToUnityFrame();
         FrameLayout layout = mUnityPlayer;
         Intent intent = getIntent();
         handleIntent(intent);
@@ -31,9 +29,9 @@ public class MainUnityActivity extends OverrideUnityActivity {
         setIntent(intent);
     }
 
+    // for turning off from main threat
     void handleIntent(Intent intent) {
         if(intent == null || intent.getExtras() == null) return;
-
         if(intent.getExtras().containsKey("doQuit"))
             if(mUnityPlayer != null) {
                 finish();
@@ -43,23 +41,13 @@ public class MainUnityActivity extends OverrideUnityActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
-        // addControlsToUnityFrame();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // mUnityPlayer.unload();
-        // super.onDestroy();
-        // finish();
     }
     
     @Override
-    protected void showMainActivity(String setToColor) {
+    protected void showMainActivity(String resultData) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("result", "res11");
-        setResult(Activity.RESULT_OK,returnIntent);
+        returnIntent.putExtra("result", resultData);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
 
 
@@ -72,12 +60,12 @@ public class MainUnityActivity extends OverrideUnityActivity {
 
         ///////////////
         //FrameLayout layout = mUnityPlayer;
-        // 
+        //
     }
 
-    // ss
-
-    @Override public void onUnityPlayerUnloaded() {
+    @Override 
+    public void onUnityPlayerUnloaded() {
+        // consider null
         showMainActivity("");
     }
 

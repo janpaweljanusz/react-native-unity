@@ -26,35 +26,41 @@ public class ToastModule extends ReactContextBaseJavaModule {
 
   private static final String DURATION_SHORT_KEY = "SHORT";
   private static final String DURATION_LONG_KEY = "LONG";
-  boolean isUnityLoaded = false;
 
-  private static final int IMAGE_PICKER_REQUEST = 10;
+  @Override
+  public Map<String, Object> getConstants() {
+    final Map<String, Object> constants = new HashMap<>();
+    constants.put(DURATION_SHORT_KEY, Toast.LENGTH_SHORT);
+    constants.put(DURATION_LONG_KEY, Toast.LENGTH_LONG);
+    return constants;
+  }
+
+  private static final int UNITY_REQUEST = 10;
   private static final String E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST";
-  private static final String E_PICKER_CANCELLED = "E_PICKER_CANCELLED";
-  private static final String E_FAILED_TO_SHOW_PICKER = "E_FAILED_TO_SHOW_PICKER";
-  private static final String E_NO_IMAGE_DATA_FOUND = "E_NO_IMAGE_DATA_FOUND";
+  private static final String E_UNITY_CANCELLED = "E_UNITY_CANCELLED"; // do to Vuforia not supporting or display error - for later work.
+  private static final String E_FAILED_TO_SHOW_UNITY = "E_FAILED_TO_SHOW_UNITY";
+  private static final String E_NO_DATA_FOUND = "E_NO_DATA_FOUND";
 
-  private Promise mPickerPromise;
+  private Promise mUnityPromise;
 
   private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
 
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intentData) {
-      if (requestCode == IMAGE_PICKER_REQUEST) {
-        if (mPickerPromise != null) {
+      if (requestCode == UNITY_REQUEST) {
+        if (mUnityPromise != null) {
           if (resultCode == Activity.RESULT_CANCELED) {
-            mPickerPromise.reject(E_PICKER_CANCELLED, "Image picker was cancelled");
+            mUnityPromise.reject(E_UNITY_CANCELLED, "Unity was cancelled, device dont support AR - edge cases");
           } else if (resultCode == Activity.RESULT_OK) {
-            String message = intentData.getStringExtra("result");
-            Log.v("kaskadowosc" ,"message" +message + ">>"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
+            String message = intentData.getStringExtra("result"); // can be json
             if (message == null) {
-              mPickerPromise.reject(E_NO_IMAGE_DATA_FOUND, "No image data found");
+              mUnityPromise.reject(E_NO_DATA_FOUND, "No data from unity - unity shut down suddenly");
             } else {
-              mPickerPromise.resolve(message);
+              mUnityPromise.resolve(message);
             }
           }
 
-          mPickerPromise = null;
+          mUnityPromise = null;
         }
       }
     }
@@ -71,30 +77,17 @@ public class ToastModule extends ReactContextBaseJavaModule {
     return "ToastExample";
   }
   
-  @Override
-  public Map<String, Object> getConstants() {
-    final Map<String, Object> constants = new HashMap<>();
-    constants.put(DURATION_SHORT_KEY, Toast.LENGTH_SHORT);
-    constants.put(DURATION_LONG_KEY, Toast.LENGTH_LONG);
-    return constants;
-  }
-  
   public void GiveLog(){
     Log.v("kaskadowosc" ,"NONO"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
   }
 
+  // obsolete
     @ReactMethod
   public void show(String message, int duration) {
-    Log.v("kaskadowosc" ,"kaskadowosc"+ getReactApplicationContext().getCurrentActivity().getIntent() +">>"+ getReactApplicationContext().getCurrentActivity().getIntent());
     Toast.makeText(getReactApplicationContext(), message, duration).show();
     Intent intent = new Intent(getReactApplicationContext(), MainUnityActivity.class);
-    if (isUnityLoaded){
-      // intent.putExtra("doQuit", true);
-    }
     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     getReactApplicationContext().startActivity(intent);
-    // callUnity();
-    isUnityLoaded = !isUnityLoaded;
   }
 
   @ReactMethod
@@ -105,23 +98,16 @@ public class ToastModule extends ReactContextBaseJavaModule {
       promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist");
       return;
     }
-
-    // Store the promise to resolve/reject when picker returns data
-    mPickerPromise = promise;
+    mUnityPromise = promise;
 
     try {
       Intent intent = new Intent(currentActivity, MainUnityActivity.class);
 
-      currentActivity.startActivityForResult(intent, IMAGE_PICKER_REQUEST);
+      currentActivity.startActivityForResult(intent, UNITY_REQUEST);
     } catch (Exception e) {
-      mPickerPromise.reject(E_FAILED_TO_SHOW_PICKER, e);
-      mPickerPromise = null;
+      mUnityPromise.reject(E_FAILED_TO_SHOW_UNITY, e);
+      mUnityPromise = null;
     }
   }
 
-
-  // public void callUnity(View v){
-  //   Intent intent = new Intent(this, MainUnityActivity.class);
-  //   startActivity(intent);
-  // }
 }
