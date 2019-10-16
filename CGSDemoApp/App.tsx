@@ -25,6 +25,7 @@ componentDidMount() {
   //   this.setState({text: 'bagno'});
   //   // handle event and you will get a value in event object, you can log it here
   // });
+  // no no
 }
 
 measureLayout = async () => {
