@@ -1,0 +1,4 @@
+#Tue Oct 15 14:23:50 CEST 2019
+base.0=E\:\\Projects\\_React_native\\react-native-unity\\UnityProject\\androidBuild\\launcher\\build\\intermediates\\transforms\\dexMerger\\release\\0
+path.0=classes.dex
+renamed.0=classes.dex
