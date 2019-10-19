@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 682965911, guid: f7fff1a98506b0033937160dbbe857ba, type: 3}
+  m_Name: 8thWallXR
+  m_EditorClassIdentifier: 
+  allChannels:
+  - release
+  - beta
+  channel: release
+  installedChannel: release
+  version: 11.2.6.519
+  autoUpdate: 1
+  autoUpdateSec: 3600
+  updateTimeoutSec: 25
+  downloadTimeoutSec: 600
+  updateAvailable: 0
+  releaseNotes:
+  - id: 12.1
+    notes: '## Release 12.1
+
+
+      ### 8th Wall Web
+
+
+      Fixes and Enhancements:
+
+      *
+      Increased camera resolution on newer iOS devices.
+
+      * Increased AFrame
+      fps on high-res Android devices.
+
+      * Fixed three.js r103+ raycasting issues.
+
+      *
+      Added support for iPadOS.
+
+      * Fixed memory issue when loading many image
+      targets repeatedly.
+
+      * Minor performance enhances and bug fixes.'
+  - id: 12
+    notes: "## Release 12\n\n### 8th Wall Web\nNew Features:\n- Increased image target
+      upload limit to 1000 image targets per app.\n- New API for selecting active
+      image targets at runtime.\n- Apps can now scan for up to 10 image targets simultaneously.\n-
+      Front facing camera is supported in camera framework and image targets.\n-
+      Engine support for PlayCanvas.\n\nFixes:\n-  Improved experience for some Android
+      phones with multiple cameras.\n\nXRExtras:\n- Improved visual quality on Android
+      Phones. \n- Support for iOS 13 device orientation permissions.\n- Better error
+      handling for missing web assembly on some older versions of iOS.\n- Support
+      for PlayCanvas."
+  - id: 11.2
+    notes: '## Release 11.2
+
+
+      ### 8th Wall Web
+
+
+      New Features
+
+      *
+      iOS 13 motion support
+
+
+      ### 8th Wall XR for Unity
+
+
+      New Features
+
+      *
+      Added support for 64-bit Android builds.
+
+      * Updated to ARCore 1.9.
+
+      *
+      Added XRDetectedImageTarget.TrackingState API.
+
+
+      Breaking Changes
+
+      *
+      Increased minimum Unity version from 5.6.1p1 to 2017.4.16f1.
+
+'
+  - id: 11.1
+    notes: '## Release 11.1
+
+
+      ### 8th Wall Web
+
+
+      Fixes and Enhancements
+
+      *
+      Reduced memory usage.
+
+      * Improved tracking performance.
+
+      * Enhanced
+      detection of browser capabilities.
+
+
+      ### 8th Wall XR for Unity
+
+
+      Fixes
+      and Enhancements
+
+      * Reduced memory usage.
+
+      * Improved tracking
+      performance.
+
+'
+  - id: 11
+    notes: '## Release 11
+
+
+      ### 8th Wall Web
+
+      New Features:
+
+      -
+      Added support for Image Targets.
+
+      - Added support for BabylonJS.
+
+      -
+      Reduced JS binary size to 1MB.
+
+      - Added support running 8th Wall Web
+      inside a cross-origin iframe.
+
+      - Minor API additions.
+
+
+      ### 8th
+      Wall XR for Unity
+
+      Fixes:
+
+      - Allow continuous ARKit image tracking
+      on iOS 12.0 when image targets are provided'
+  - id: 10.1
+    notes: "## Release 10.1\n\n### 8th Wall Web\nNew Features:\n- Added support for
+      A-Frame 0.9.0.\n\nFixes:\n- Fixed error when providing `includedTypes` to XrController.hitTest().\n-
+      Reduced memory usage when tracking over extended distances.\n\n### 8th Wall
+      XR for Unity\nFixes:\n- Fixed issue which reduced framerate on slower ARCore
+      devices. \n- Fixed issue where old frames would be displayed on slower ARCore
+      devices.\n- Fixed crash on ARKit devices when ARWorldTrackingConfiguration
+      is not available.\n- Fixed issue on ARCore devices where camera permissions
+      were not requested properly in apps built with Unity 2018.3 or newer."
+  - id: 10
+    notes: "## Release 10.0\n\nRelease 10 adds a revamped web developer console with
+      streamlined developer-mode, access to allowed origins and QR codes. It adds
+      8th Wall Web support for XRExtras, an open-source package for error handling,
+      loading visualizations, \"almost there\" flows, and more.\n\n### 8th Wall Web\nNew
+      Features:\n* Revamped web developer console.\n* XR Extras provides a convenient
+      solution for:\n  * Load screens and requesting camera permissions.\n  * Redirecting
+      users from unsupported devices or browsers (\"almost there\").\n  * Runtime
+      error handling.\n  * Drawing a full screen camera feed in low-level frameworks
+      like threejs.\n* Added public lighting, hit test interfaces to XrController.\n*
+      Other minor API additions.\n\nFixes and Enhancements:\n* Improved app startup
+      speed.\n* Fixed a framework issue where errors were not propagated on startup.\n*
+      Fixed an issue that could occur with WebGL during initialization.\n* Use window.screen
+      interface for device orientation if available.\n* Fixed a threejs issue that
+      could occur when the canvas is resized.\n\n### 8th Wall XR for Unity\nFixes
+      and Enhancements:\n* Better support for Android camera permissions in Unity
+      2018.3."
+  - id: 9.3
+    notes: '## Release 9.3
+
+
+      ### 8th Wall Web
+
+      New Features:
+
+      *
+      Minor API additions.
+
+
+      ### 8th Wall XR for Unity
+
+      Fixes:
+
+      -
+      Fixed an issue when lifecycle methods were called out of order.
+
+'
+  - id: 9.2
+    notes: '## Release 9.2
+
+
+      ### 8th Wall Web
+
+      New Features:
+
+      *
+      New documentation released: https://docs.8thwall.com/web
+
+
+      ### 8th Wall
+      XR for Unity
+
+      Fixes
+
+      * Fixed issue on iOS devices without autofocus
+      support.'
+  - id: 9.1
+    notes: '## Release 9.1
+
+
+      New Features:
+
+      * Added support for Amazon
+      Sumerian in 8th Wall Web
+
+      * Added ARCore Availability API
+
+      * Improved
+      tracking stability and eliminated jitter
+
+
+      Fixes:
+
+      * Fixed issue
+      with ProGuard obfuscation rules that could cause package conflicts'
